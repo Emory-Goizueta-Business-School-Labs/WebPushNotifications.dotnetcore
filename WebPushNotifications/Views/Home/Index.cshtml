@@ -1,0 +1,50 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@model WebPushNotifications.Models.Notification
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    window.webPushNotifications = {
+        antiforgeryToken: "@(Antiforgery.GetAndStoreTokens(Context).RequestToken)"
+    }
+</script>
+@{ /*
+<button id="log-subscription">Log Subscription</button>
+    */
+    }
+
+<div class="row">
+    <div class="col-sm-6 text-break">        
+        <div id="subscribe"></div>
+    </div>
+    <div class="col-sm-6">
+        <div id="notify"></div>
+    </div>
+</div>
+
+<template id="subscription">
+    <div class="d-none subscription-info">
+        <p>Your subscription: </p>
+    </div>
+    <div class="subscribe-button">
+        <button class="d-none btn btn-primary">Subscribe to Push Notifications</button>
+    </div>
+</template>
+
+<template id="send-notification">
+    <div class="notification-form d-none">
+        <form method="post" asp-action="SendNotification" asp-controller="Home">
+            <div class="mb-3">
+                <input asp-for="Title" />
+
+            </div>
+            <div class="mb-3">
+                <input asp-for="Body" />
+            </div>
+            <input type="submit" class="btn btn-primary" value="Send Notification" />
+        </form>
+    </div>
+</template>
+
